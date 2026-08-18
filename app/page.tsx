@@ -27,8 +27,8 @@ export default function Home() {
         </ul>
       </nav>
 
-      {/* Hero Section */}
-      <header className="relative min-h-screen flex items-center justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible">
+      {/* Hero Section = #about landing page */}
+      <header id="about" className="relative min-h-screen flex items-center justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible">
 
         {/* 1. THE BIG BOLD 3D NAME */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
@@ -50,8 +50,9 @@ export default function Home() {
           <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
           <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! 👋</h2>
           <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
-            I'm a passionate developer creating beautiful, dynamic, and engaging web experiences.
-            I love combining code and design to build impactful digital solutions.
+            I'm An IT & Management undergraduate at the University of Moratuwa.
+            I’m drawn to things that let me create, experiment, and leave a little bit of my own touch behind.
+
           </p>
         </div>
 
@@ -90,7 +91,6 @@ export default function Home() {
       {/* Sections Below Hero */}
       <main className="flex flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
         {[
-          { id: 'about', title: 'About Me' },
           { id: 'education', title: 'Education' },
           { id: 'skills', title: 'Technical Skills' },
           { id: 'projects', title: 'Projects' },
