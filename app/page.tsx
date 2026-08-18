@@ -90,8 +90,71 @@ export default function Home() {
 
       {/* Sections Below Hero */}
       <main className="flex flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
+
+        {/* ── Education ── */}
+        <section
+          id="education"
+          className="scroll-mt-32 min-h-fit p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
+        >
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
+
+          <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-10 tracking-tight">
+            Education
+            <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
+          </h2>
+
+          <div className="w-full flex flex-col gap-6 relative z-10">
+
+            {/* University Card */}
+            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-[0_0_0_1px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#2A0134]/60 transition-all duration-300 group/card">
+              <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-white leading-snug">
+                    Faculty of IT, University of Moratuwa
+                  </h3>
+                  <p className="text-purple-300/80 text-sm font-medium mt-0.5">BSc. (Hons) Information Technology &amp; Management</p>
+                </div>
+                <span className="text-xs text-slate-400 font-mono bg-white/5 px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">2024 – Present</span>
+              </div>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(192,132,252,0.8)]"></span>
+                  CGPA: 3.74 / 4.00
+                </div>
+                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 shadow-[0_0_6px_rgba(232,121,249,0.8)]"></span>
+                  Dean&apos;s List — Semester 02
+                </div>
+              </div>
+            </div>
+
+            {/* A/L Card */}
+            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-[0_0_0_1px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#2A0134]/60 transition-all duration-300">
+              <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-white leading-snug">
+                    Devi Balika Vidyalaya, Colombo 08
+                  </h3>
+                  <p className="text-purple-300/80 text-sm font-medium mt-0.5">G.C.E. Advanced Level</p>
+                </div>
+                <span className="text-xs text-slate-400 font-mono bg-white/5 px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">2020 – 2023</span>
+              </div>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(192,132,252,0.8)]"></span>
+                  3A passes — Commerce Stream (English Medium)
+                </div>
+                <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs text-slate-400 font-medium">
+                  2022 (2023)
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ── Remaining Sections ── */}
         {[
-          { id: 'education', title: 'Education' },
           { id: 'skills', title: 'Technical Skills' },
           { id: 'projects', title: 'Projects' },
           { id: 'certificates', title: 'Certificates' },
