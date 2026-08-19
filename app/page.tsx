@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SkillsCarousel from "./skills-carousel";
 
 export default function Home() {
   return (
@@ -50,7 +50,7 @@ export default function Home() {
           <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
           <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! 👋</h2>
           <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
-            I'm An IT & Management undergraduate at the University of Moratuwa.
+            I&apos;m An IT &amp; Management undergraduate at the University of Moratuwa.
             I’m drawn to things that let me create, experiment, and leave a little bit of my own touch behind.
 
           </p>
@@ -154,8 +154,21 @@ export default function Home() {
         </section>
 
         {/* ── Remaining Sections ── */}
+        <section
+          id="skills"
+          className="scroll-mt-32 min-h-fit bg-[#0d0722]/60 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden relative"
+        >
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+
+          <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-8 tracking-tight relative z-10">
+            Technical Skills
+            <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
+          </h2>
+
+          <SkillsCarousel />
+        </section>
+
         {[
-          { id: 'skills', title: 'Technical Skills' },
           { id: 'projects', title: 'Projects' },
           { id: 'certificates', title: 'Certificates' },
           { id: 'experience', title: 'Experience' },
