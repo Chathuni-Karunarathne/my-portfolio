@@ -1,4 +1,5 @@
 import SkillsCarousel from "./skills-carousel";
+import ProjectsAccordion from "./projects-accordion";
 
 export default function Home() {
   return (
@@ -166,8 +167,9 @@ export default function Home() {
           <SkillsCarousel />
         </section>
 
+        <ProjectsAccordion />
+
         {[
-          { id: 'projects', title: 'Projects' },
           { id: 'certificates', title: 'Certificates' },
           { id: 'experience', title: 'Experience' },
           { id: 'leadership', title: 'Community & Leadership' },
