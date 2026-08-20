@@ -156,11 +156,9 @@ export default function Home() {
         {/* ── Remaining Sections ── */}
         <section
           id="skills"
-          className="scroll-mt-32 min-h-fit bg-[#0d0722]/60 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden relative"
+          className="scroll-mt-32 min-h-fit px-0 py-8 relative"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
-
-          <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-8 tracking-tight relative z-10">
+          <h2 className="text-4xl font-bold text-white mb-8 tracking-tight relative z-10">
             Technical Skills
             <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
           </h2>
