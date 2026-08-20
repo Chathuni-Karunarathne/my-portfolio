@@ -30,13 +30,37 @@ const cards: SkillCard[] = [
   ] },
 ];
 
-function SkillPill({ item }: { item: SkillItem }) {
+function SkillBadge({ item }: { item: SkillItem }) {
   return (
-    <div className="flex min-w-[110px] items-center justify-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/50 px-4 py-2.5 font-medium whitespace-nowrap text-purple-200 shadow-lg transition-all hover:bg-purple-900/80">
-      <svg viewBox="0 0 24 24" className="h-4 w-4 flex-shrink-0" fill={item.color} aria-hidden="true">
-        <path d={item.iconPath} />
+    <div className="group relative flex h-20 w-20 shrink-0 items-center justify-center" title={item.name}>
+      <svg className="hexagon-glow absolute inset-0 h-full w-full transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1" viewBox="0 0 100 100" aria-hidden="true">
+        <polygon
+          className="hexagon-halo"
+          points="50 3, 93 25, 93 75, 50 97, 7 75, 7 25"
+          fill="#0e0822"
+          stroke="#7c3aed"
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+        />
+        <polygon
+          className="hexagon-outline"
+          points="50 3, 93 25, 93 75, 50 97, 7 75, 7 25"
+          fill="none"
+          stroke="#c084fc"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength="100"
+        />
       </svg>
-      <span className="text-sm md:text-base">{item.name}</span>
+      <div className="relative z-10 flex items-center justify-center p-3" aria-label={item.name} role="img">
+        <svg viewBox="0 0 24 24" className="h-8 w-8" fill={item.color} aria-hidden="true">
+          <path d={item.iconPath} />
+        </svg>
+      </div>
+      <span className="pointer-events-none absolute bottom-[calc(100%+0.5rem)] left-1/2 z-50 -translate-x-1/2 translate-y-1 rounded-md border border-purple-500/30 bg-[#0b0618]/95 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-purple-100 opacity-0 shadow-[0_0_15px_rgba(168,85,247,0.25)] transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+        {item.name}
+      </span>
     </div>
   );
 }
@@ -121,8 +145,8 @@ export default function SkillsCarousel() {
               } ${isVisible ? "" : "opacity-0"}`}
             >
               <h3 className="mb-6 text-2xl font-semibold text-purple-100 md:text-3xl">{card.title}</h3>
-              <div className="flex flex-wrap gap-3">
-                {card.items.map((item) => <SkillPill key={item.name} item={item} />)}
+              <div className="flex flex-wrap justify-center gap-4 p-4">
+                {card.items.map((item) => <SkillBadge key={item.name} item={item} />)}
               </div>
             </motion.article>
           );
