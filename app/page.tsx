@@ -3,7 +3,7 @@ import ProjectsAccordion from "./projects-accordion";
 
 export default function Home() {
   return (
-    <div className="bg-[#080010] text-white min-h-screen font-sans overflow-x-hidden">
+    <div className="bg-[#080010] text-white min-h-screen font-sans">
       {/* Navigation (Top Left Horizontal) */}
       <nav className="fixed top-0 left-0 z-50 p-6 md:p-8 pointer-events-none w-full max-w-[100vw]">
         <ul className="flex flex-row flex-wrap items-center gap-4 lg:gap-8 pointer-events-auto relative px-6 py-3 rounded-full backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.6),0_0_30px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-max max-w-full overflow-x-auto no-scrollbar">

@@ -1,8 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-
 type Project = {
 	number: string;
 	title: string;
@@ -55,25 +52,26 @@ function ProjectPreview({ number }: { number: string }) {
 }
 
 export default function ProjectsAccordion() {
-	const [activeIndex, setActiveIndex] = useState(0);
-
 	return (
-		<section id="projects" className="scroll-mt-32 relative py-12">
+		<section id="projects" className="relative w-full py-20">
 			<h2 className="mb-12 text-6xl font-black tracking-wider text-white/90 drop-shadow-[0_0_35px_rgba(168,85,247,0.3)]">PROJECTS</h2>
-			<div className="space-y-3">
+			<div className="space-y-0">
 				{projects.map((project, index) => {
-					const isActive = activeIndex === index;
+					const stackClasses = [
+						"sticky top-24 z-10 mb-20",
+						"sticky top-32 z-20 mb-20",
+						"sticky top-40 z-30 mb-20",
+						"sticky top-48 z-40 mb-20",
+					][index];
+
 					return (
-						<motion.article key={project.number} layout className="overflow-hidden rounded-3xl border border-purple-500/30 bg-[#0d0722]/80 backdrop-blur-xl">
-							<button type="button" onClick={() => setActiveIndex(index)} aria-expanded={isActive} className="flex w-full items-center gap-4 border-b border-purple-500/20 px-5 py-4 text-left hover:bg-purple-900/30 md:gap-8 md:px-8">
+						<article key={project.number} className={`${stackClasses} overflow-hidden rounded-3xl border border-purple-500/30 bg-[#0d0722] shadow-[0_-15px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl`}>
+							<div className="flex w-full items-center gap-4 border-b border-purple-500/20 px-5 py-4 md:gap-8 md:px-8">
 								<span className="text-4xl font-black text-white/90 md:text-6xl">{project.number}</span>
 								<span className="min-w-0 flex-1"><span className="block truncate text-lg font-semibold text-white md:text-2xl">{project.title}</span><span className="mt-1 block truncate text-sm text-slate-400">{project.timeline}</span></span>
-								<span className="text-2xl text-purple-300">{isActive ? "−" : "+"}</span>
-							</button>
-							<AnimatePresence initial={false}>
-								{isActive && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.45, ease: "easeInOut" }}><div className="grid gap-6 p-5 md:grid-cols-[1.1fr_1fr] md:p-8"><div><p className="text-base leading-relaxed text-slate-300">{project.description}</p><div className="mt-6 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="rounded-full border border-purple-500/30 bg-purple-950/60 px-3 py-1.5 text-xs text-purple-200">{technology}</span>)}</div></div><ProjectPreview number={project.number} /></div></motion.div>}
-							</AnimatePresence>
-						</motion.article>
+							</div>
+							<div className="grid gap-6 p-5 md:grid-cols-[1.1fr_1fr] md:p-8"><div><p className="text-base leading-relaxed text-slate-300">{project.description}</p><div className="mt-6 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="rounded-full border border-purple-500/30 bg-purple-950/60 px-3 py-1.5 text-xs text-purple-200">{technology}</span>)}</div></div><ProjectPreview number={project.number} /></div>
+						</article>
 					);
 				})}
 			</div>
