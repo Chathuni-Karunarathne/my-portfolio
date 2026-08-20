@@ -54,18 +54,18 @@ function ProjectPreview({ number }: { number: string }) {
 export default function ProjectsAccordion() {
 	return (
 		<section id="projects" className="relative w-full py-20">
-			<h2 className="mb-12 text-6xl font-black tracking-wider text-white/90 drop-shadow-[0_0_35px_rgba(168,85,247,0.3)]">PROJECTS</h2>
+			<h2 className="sticky top-24 z-50 mb-12 bg-[#090514] py-6 text-6xl font-black tracking-wider text-white/90 drop-shadow-[0_0_35px_rgba(168,85,247,0.3)]">PROJECTS</h2>
 			<div className="space-y-0">
 				{projects.map((project, index) => {
 					const stackClasses = [
-						"sticky top-24 z-10 mb-20",
-						"sticky top-32 z-20 mb-20",
-						"sticky top-40 z-30 mb-20",
-						"sticky top-48 z-40 mb-20",
+						"sticky top-[13rem] z-10 mb-12",
+						"sticky top-[21rem] z-20 mb-12",
+						"sticky top-[29rem] z-30 mb-12",
+						"relative top-[4rem] z-40 mb-[4rem]",
 					][index];
 
 					return (
-						<article key={project.number} className={`${stackClasses} overflow-hidden rounded-3xl border border-purple-500/30 bg-[#0d0722] shadow-[0_-15px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl`}>
+						<article key={project.number} className={`${stackClasses} rounded-3xl border border-purple-500/30 bg-[#0d0722] p-8 shadow-[0_-15px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl`}>
 							<div className="flex w-full items-center gap-4 border-b border-purple-500/20 px-5 py-4 md:gap-8 md:px-8">
 								<span className="text-4xl font-black text-white/90 md:text-6xl">{project.number}</span>
 								<span className="min-w-0 flex-1"><span className="block truncate text-lg font-semibold text-white md:text-2xl">{project.title}</span><span className="mt-1 block truncate text-sm text-slate-400">{project.timeline}</span></span>
