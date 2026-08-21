@@ -110,8 +110,9 @@ function Card({
                         </h2>
                     </div>
                 )}
-                <motion.article className="relative w-full rounded-3xl border border-purple-500/30 bg-[#0d0722] p-6 md:px-8 md:pt-6 md:pb-8 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] backdrop-blur-xl">
-                    <div className="flex w-full items-center gap-4 border-b border-purple-500/20 pb-3.5 md:gap-6">
+                <motion.article className="relative w-full rounded-[2rem] border border-[#2A0134]/70 bg-[#1a0524]/60 p-6 shadow-2xl backdrop-blur-xl overflow-hidden md:px-8 md:pt-6 md:pb-8">
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,_rgba(168,85,247,0.14),_transparent_55%)]" />
+                    <div className="flex w-full relative z-10 items-center gap-4 border-b border-purple-500/20 pb-3.5 md:gap-6">
                         <span className="text-3xl font-black text-white/90 md:text-5xl">
                             {project.number}
                         </span>
@@ -134,7 +135,7 @@ function Card({
                                 {project.technologies.map((tech) => (
                                     <span
                                         key={tech}
-                                        className="rounded-full border border-purple-500/30 bg-purple-950/60 px-3 py-1 text-xs text-purple-200"
+                                        className="rounded-full border border-purple-400/40 bg-[#2A0134]/80 px-3 py-1 text-xs font-medium text-purple-100 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_20px_rgba(42,1,52,0.5)]"
                                     >
                                         {tech}
                                     </span>
