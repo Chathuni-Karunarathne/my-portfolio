@@ -117,14 +117,14 @@ export default function Home() {
                 </div>
                 <span className="text-xs text-slate-400 font-mono bg-white/5 px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">2024 – Present</span>
               </div>
-              <div className="flex flex-wrap gap-3 mt-4">
-                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium">
+              <div className="mt-4 flex flex-col gap-3">
+                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium w-fit max-w-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(192,132,252,0.8)]"></span>
-                  CGPA: 3.74 / 4.00
+                  <span>CGPA: 3.74 / 4.00</span>
                 </div>
-                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium">
+                <div className="flex items-center gap-2 bg-[#2A0134]/40 border border-[#2A0134]/60 rounded-full px-4 py-1.5 text-xs text-purple-200 font-medium w-fit max-w-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 shadow-[0_0_6px_rgba(232,121,249,0.8)]"></span>
-                  Dean&apos;s List — Semester 02
+                  <span>Dean&apos;s List — Semester 02</span>
                 </div>
               </div>
             </div>
@@ -201,9 +201,9 @@ export default function Home() {
                 />
                 <defs>
                   <linearGradient id="cert-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#c084fc" />
-                    <stop offset="50%" stopColor="#e879f9" />
-                    <stop offset="100%" stopColor="#38bdf8" />
+                    <stop offset="0%" stopColor="#f5d0fe" />
+                    <stop offset="50%" stopColor="#c084fc" />
+                    <stop offset="100%" stopColor="#9333ea" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -251,9 +251,9 @@ export default function Home() {
                 />
                 <defs>
                   <linearGradient id="cert-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#38bdf8" />
-                    <stop offset="50%" stopColor="#c084fc" />
-                    <stop offset="100%" stopColor="#e879f9" />
+                    <stop offset="0%" stopColor="#e9d5ff" />
+                    <stop offset="50%" stopColor="#d8b4fe" />
+                    <stop offset="100%" stopColor="#a855f7" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -275,7 +275,7 @@ export default function Home() {
               </div>
 
               <div className="relative z-10 mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
-                <span className="w-2 h-2 rounded-full bg-cyan-400/80 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></span>
+                <span className="w-2 h-2 rounded-full bg-violet-400/80 shadow-[0_0_8px_rgba(168,85,247,0.6)]"></span>
                 <span>Sri Lanka Institute of Information Technology (SLIIT)</span>
               </div>
             </div>

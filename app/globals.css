@@ -35,7 +35,9 @@ body {
 }
 
 .hexagon-outline {
-  stroke-dasharray: 18 82;
+  stroke-linecap: round;
+  stroke-dasharray: 18 84;
+  stroke-dashoffset: 100;
   animation: hexagon-ray 18s linear infinite;
   filter: drop-shadow(0 0 4px rgba(192, 132, 252, 0.9));
 }
@@ -45,14 +47,19 @@ body {
 }
 
 @keyframes hexagon-ray {
-  to {
-    stroke-dashoffset: -100;
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
 /* Certificate Cards Single Slow Moving Glowing Border Ray */
 .cert-border-ray-1,
 .cert-border-ray-2 {
+  stroke-linecap: round;
   stroke-dasharray: 20 80;
   stroke-dashoffset: 100;
   animation: cert-ray-loop 30s linear infinite;
@@ -60,19 +67,19 @@ body {
 }
 
 .cert-border-ray-1 {
-  filter: drop-shadow(0 0 6px rgba(232, 121, 249, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
+  filter: drop-shadow(0 0 6px rgba(216, 180, 254, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
 }
 
 .cert-border-ray-2 {
-  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
+  filter: drop-shadow(0 0 6px rgba(196, 181, 253, 1)) drop-shadow(0 0 12px rgba(147, 51, 234, 0.8));
 }
 
 @keyframes cert-ray-loop {
-  from {
+  0% {
     stroke-dashoffset: 100;
   }
 
-  to {
+  100% {
     stroke-dashoffset: 0;
   }
 }

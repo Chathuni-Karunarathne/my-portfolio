@@ -119,7 +119,7 @@ function Card({
                             <span className="block truncate text-base font-bold text-white md:text-xl">
                                 {project.title}
                             </span>
-                            <span className="mt-0.5 block truncate text-xs font-medium text-purple-300/80 md:text-sm">
+                            <span className="mt-0.5 block truncate text-xs font-medium text-slate-400 md:text-sm">
                                 {project.timeline}
                             </span>
                         </span>
