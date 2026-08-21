@@ -22,6 +22,46 @@ export default function Home() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
 
+  // Contact form state
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitSuccess(null);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setSubmitSuccess("Your message has been sent successfully!");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setSubmitError(data.error || "Failed to send email. Please try again.");
+      }
+    } catch (err) {
+      setSubmitError("An unexpected error occurred. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleDownload = () => {
     setIsDownloading(true);
 
@@ -140,7 +180,11 @@ export default function Home() {
           {/* Contact Me — Neon glowing primary pill */}
           <button
             type="button"
-            onClick={() => setIsContactOpen(true)}
+            onClick={() => {
+              setIsContactOpen(true);
+              setSubmitSuccess(null);
+              setSubmitError(null);
+            }}
             className="relative w-full px-6 py-4 rounded-full text-center font-semibold text-white overflow-hidden backdrop-blur-2xl bg-[#2A0134]/80 border border-white/10 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_35px_rgba(42,1,52,1),0_0_60px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] hover:bg-[#3d024a]/80 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.5),0_0_50px_rgba(42,1,52,1),0_0_80px_rgba(42,1,52,0.6)] transition-all duration-300"
           >
             <span className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
@@ -171,9 +215,8 @@ export default function Home() {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#030208]/75 backdrop-blur-sm px-4 py-6"
           onClick={() => setIsContactOpen(false)}
         >
-          <div
-            role="dialog"
-            aria-modal="true"
+          <form
+            onSubmit={handleContactSubmit}
             className="relative w-full max-w-md rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_0_0_1px_rgba(168,85,247,0.22),0_0_25px_rgba(42,1,52,0.7)] backdrop-blur-2xl md:p-5"
             onClick={(event) => event.stopPropagation()}
           >
@@ -187,6 +230,18 @@ export default function Home() {
             </button>
 
             <div className="space-y-4 pt-3">
+              {submitSuccess && (
+                <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                  {submitSuccess}
+                </div>
+              )}
+
+              {submitError && (
+                <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-sm text-rose-300 shadow-[0_0_15px_rgba(244,63,94,0.1)]">
+                  {submitError}
+                </div>
+              )}
+
               <div>
                 <label htmlFor="name" className="mb-2 block text-base font-bold text-white md:text-lg">
                   Name
@@ -195,7 +250,11 @@ export default function Home() {
                   id="name"
                   type="text"
                   placeholder="Your Name"
-                  className="w-full rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)]"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="w-full rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)] disabled:opacity-50"
                 />
               </div>
 
@@ -207,7 +266,11 @@ export default function Home() {
                   id="email"
                   type="email"
                   placeholder="Your Email"
-                  className="w-full rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)]"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="w-full rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)] disabled:opacity-50"
                 />
               </div>
 
@@ -219,21 +282,26 @@ export default function Home() {
                   id="message"
                   rows={4}
                   placeholder="Your Message"
-                  className="w-full resize-none rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)]"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="w-full resize-none rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)] disabled:opacity-50"
                 />
               </div>
             </div>
 
             <div className="mt-5 flex justify-center">
               <button
-                type="button"
-                className="relative w-[78%] rounded-full border border-white/10 bg-[#2A0134]/80 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_35px_rgba(42,1,52,1),0_0_60px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:bg-[#3d024a]/80 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.5),0_0_50px_rgba(42,1,52,1),0_0_80px_rgba(42,1,52,0.6)]"
+                type="submit"
+                disabled={isSubmitting}
+                className="relative w-[78%] rounded-full border border-white/10 bg-[#2A0134]/80 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_35px_rgba(42,1,52,1),0_0_60px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:bg-[#3d024a]/80 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.5),0_0_50px_rgba(42,1,52,1),0_0_80px_rgba(42,1,52,0.6)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="absolute top-0 left-5 right-5 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
-                Contact Me
+                {isSubmitting ? "Sending..." : "Contact Me"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       )}
 
