@@ -51,16 +51,19 @@ body {
 }
 
 /* Certificate Cards Single Slow Moving Glowing Border Ray */
-.cert-border-ray-1 {
+.cert-border-ray-1,
+.cert-border-ray-2 {
   stroke-dasharray: 20 80;
-  animation: cert-ray-loop 14s linear infinite;
+  stroke-dashoffset: 100;
+  animation: cert-ray-loop 30s linear infinite;
+  animation-delay: 0s;
+}
+
+.cert-border-ray-1 {
   filter: drop-shadow(0 0 6px rgba(232, 121, 249, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
 }
 
 .cert-border-ray-2 {
-  stroke-dasharray: 20 80;
-  animation: cert-ray-loop 16s linear infinite;
-  animation-delay: -30s;
   filter: drop-shadow(0 0 6px rgba(34, 211, 238, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
 }
 
