@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll } from "framer-motion";
 
 type Project = {
@@ -9,6 +10,7 @@ type Project = {
     timeline: string;
     description: string;
     technologies: string[];
+    image?: string; // Dynamic project image path
 };
 
 const projects: Project[] = [
@@ -18,6 +20,7 @@ const projects: Project[] = [
         timeline: "11/2025 - Present",
         description: "A scalable, enterprise-level asset registry featuring real-time tracking, advanced data grids, bulk transfers, automated PDF tag generation, and role-based authentication.",
         technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Drizzle ORM"],
+        image: "/eitams.png",
     },
     {
         number: "02",
@@ -25,6 +28,7 @@ const projects: Project[] = [
         timeline: "09/2025 - 11/2025",
         description: "A dynamic content publishing platform with secure role-based access, comprehensive blog CRUD management, optimized relational schema, and interactive user profiles.",
         technologies: ["PHP", "MySQL", "HTML", "CSS", "JavaScript", "Git", "GitHub"],
+        image: "/wordora.png",
     },
     {
         number: "03",
@@ -32,6 +36,7 @@ const projects: Project[] = [
         timeline: "12/2024 - 08/2025",
         description: "A physical arcade game powered by custom EasyEDA PCBs, rotary encoder paddle controls, and seven-segment displays synchronized via shift registers.",
         technologies: ["ESP32", "Arduino", "C++", "EasyEDA", "74HC595", "Rotary Encoders"],
+        image: "/retroclash.jpg",
     },
     {
         number: "04",
@@ -39,33 +44,32 @@ const projects: Project[] = [
         timeline: "10/2023 - 04/2024",
         description: "A desktop reservation management platform built with Java Swing/AWT, featuring JDBC MySQL integration, report/PDF generation, and internationalization (i18n) support.",
         technologies: ["Java", "Swing", "AWT", "MySQL", "JDBC", "PDF Generation"],
+        image: "/campres.png",
     },
 ];
 
-function ProjectPreview({ number }: { number: string }) {
+function ProjectPreview({ number, image, title }: { number: string; image?: string; title: string }) {
     return (
-        <div className="relative h-48 overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-fuchsia-500/25 via-purple-500/15 to-cyan-400/20 md:h-60">
-            <div className="absolute inset-4 rounded-xl border border-white/10 bg-black/25 p-4 backdrop-blur-sm">
-                <div className="mb-3 flex gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-fuchsia-300/80" />
-                    <span className="h-2 w-2 rounded-full bg-purple-300/70" />
-                    <span className="h-2 w-2 rounded-full bg-cyan-300/70" />
+        <div className="relative h-48 w-full overflow-hidden rounded-2xl border border-purple-500/30 bg-purple-950/20 md:h-60">
+            {image ? (
+                <Image
+                    src={image}
+                    alt={title}
+                    fill
+                    className="object-cover object-top transition-transform duration-500 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={number === "01"}
+                />
+            ) : (
+                /* Fallback gradient if image is missing */
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-purple-900/40 to-slate-900 text-sm text-purple-300/60">
+                    No image provided
                 </div>
-                <div className="grid h-[calc(100%-1.25rem)] grid-cols-5 gap-2">
-                    <div className="rounded bg-purple-300/10" />
-                    <div className="col-span-4 space-y-2">
-                        <div className="h-3 w-2/3 rounded bg-white/20" />
-                        <div className="h-16 rounded bg-white/10" />
-                        <div className="grid grid-cols-3 gap-2">
-                            <div className="h-7 rounded bg-purple-300/15" />
-                            <div className="h-7 rounded bg-cyan-300/15" />
-                            <div className="h-7 rounded bg-fuchsia-300/15" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <span className="absolute bottom-3 left-4 text-xs uppercase tracking-[0.22em] text-white/60">
-                Project preview / {number}
+            )}
+
+            {/* Subtle Overlay Badge */}
+            <span className="absolute bottom-3 left-4 rounded-md bg-black/60 px-2.5 py-1 text-xs uppercase tracking-[0.22em] text-white/80 backdrop-blur-md">
+                Project  {number} / preview
             </span>
         </div>
     );
@@ -84,7 +88,6 @@ function Card({
         offset: ["start end", "start start"],
     });
 
-    // Uniform step of exactly 92px between all cards so every header (number, title, and duration) remains fully visible
     const TITLE_HEIGHT = 80;
     const HEADER_STEP = 92;
     const topMargin = index === 0 ? 0 : TITLE_HEIGHT + index * HEADER_STEP;
@@ -108,7 +111,6 @@ function Card({
                     </div>
                 )}
                 <motion.article className="relative w-full rounded-3xl border border-purple-500/30 bg-[#0d0722] p-6 md:px-8 md:pt-6 md:pb-8 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] backdrop-blur-xl">
-                    {/* Header Strip with Number, Title, and Timeline Duration */}
                     <div className="flex w-full items-center gap-4 border-b border-purple-500/20 pb-3.5 md:gap-6">
                         <span className="text-3xl font-black text-white/90 md:text-5xl">
                             {project.number}
@@ -139,7 +141,7 @@ function Card({
                                 ))}
                             </div>
                         </div>
-                        <ProjectPreview number={project.number} />
+                        <ProjectPreview number={project.number} image={project.image} title={project.title} />
                     </div>
                 </motion.article>
             </div>
