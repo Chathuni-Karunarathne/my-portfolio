@@ -1,14 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { siGithub, siGmail } from "simple-icons";
+import { useEffect, useState } from "react";
 import SkillsCarousel from "./skills-carousel";
 import ProjectsAccordion from "./projects-accordion";
 
+const linkedInIcon = {
+  path: "M6.94 8.94A1.94 1.94 0 1 1 6.94 5.06a1.94 1.94 0 0 1 0 3.88ZM5.5 9.67h2.88v8.45H5.5V9.67Zm4.43 0h2.76v1.15h.04c.38-.72 1.32-1.48 2.72-1.48 2.91 0 3.45 1.91 3.45 4.39v4.39h-2.88v-4.11c0-1.01-.02-2.3-1.4-2.3-1.41 0-1.63 1.1-1.63 2.23v4.18H9.93V9.67Z",
+};
+
+const socialLinks = [
+  { href: "https://github.com/Chathuni-Karunarathne", label: "GitHub", icon: siGithub },
+  { href: "https://www.linkedin.com/in/chathuni-karunarathne", label: "LinkedIn", icon: linkedInIcon },
+  { href: "mailto:chathunikarunarathne@gmail.com", label: "Email", icon: siGmail },
+];
+
 export default function Home() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollToTop(window.scrollY > 180);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="bg-[#080010] text-white min-h-screen font-sans">
+    <div className="flex min-h-screen flex-col bg-[#080010] text-white font-sans">
       {/* Navigation (Top Left Horizontal) */}
       <nav className="fixed top-0 left-0 z-50 pt-3 px-6 md:pt-4 md:px-8 pointer-events-none w-full max-w-[100vw]">
         <ul className="flex flex-row flex-wrap items-center gap-4 lg:gap-8 pointer-events-auto relative px-6 py-3 rounded-full backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.6),0_0_30px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-max max-w-full overflow-x-auto no-scrollbar">
@@ -169,7 +196,7 @@ export default function Home() {
       )}
 
       {/* Sections Below Hero */}
-      <main className="flex flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
+      <main className="flex flex-1 flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
 
         {/* ── Education ── */}
         <section
@@ -392,6 +419,41 @@ export default function Home() {
           </ul>
         </section>
       </main>
+
+      <div className="border-t border-white/10 bg-[#0b0618]/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 px-6 py-5">
+          <div className="flex items-center gap-4">
+            {socialLinks.map(({ href, label, icon }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noreferrer" : undefined}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-purple-400/40 bg-[#1a0524]/70 text-purple-200 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_16px_rgba(42,1,52,0.7)] transition hover:bg-[#2A0134]/80 hover:text-white"
+                aria-label={label}
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+                  <path d={icon.path} />
+                </svg>
+              </a>
+            ))}
+          </div>
+          <div className="text-center text-sm text-slate-300 md:text-base">
+            <span className="font-medium tracking-wide">© 2026 Chathuni Karunarathne. All Rights Reserved.</span>
+          </div>
+        </div>
+      </div>
+
+      {showScrollToTop && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          aria-label="Return to top"
+          className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-purple-400/40 bg-[#1a0524]/80 text-lg text-purple-200 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_18px_rgba(42,1,52,0.8)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-[#2A0134]/90 hover:text-white"
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 }
