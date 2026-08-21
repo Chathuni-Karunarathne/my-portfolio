@@ -11,8 +11,8 @@ const linkedInIcon = {
 
 const socialLinks = [
   { href: "https://github.com/Chathuni-Karunarathne", label: "GitHub", icon: siGithub },
-  { href: "https://www.linkedin.com/in/chathuni-karunarathne", label: "LinkedIn", icon: linkedInIcon },
-  { href: "mailto:chathunikarunarathne@gmail.com", label: "Email", icon: siGmail },
+  { href: "https://www.linkedin.com/in/chathuni-k", label: "LinkedIn", icon: linkedInIcon },
+  { href: "mailto:chathunik27@gmail.com", label: "Email", icon: siGmail },
 ];
 
 export default function Home() {
