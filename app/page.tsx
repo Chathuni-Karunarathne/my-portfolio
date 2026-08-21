@@ -169,17 +169,75 @@ export default function Home() {
 
         <ProjectsAccordion />
 
+        {/* ── Certificates ── */}
+        <section
+          id="certificates"
+          className="scroll-mt-32 min-h-fit px-0 py-8 relative mt-16 md:mt-24"
+        >
+          <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-8 tracking-tight relative z-10">
+            Certificates
+            <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full relative z-10">
+            {/* Certificate 1 */}
+            <div className="p-7 md:p-8 rounded-[2rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl hover:border-purple-500/40 transition-all duration-500 relative overflow-hidden group flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#2A0134]/30 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500 pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <span className="text-xs font-mono text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-3 py-1 rounded-full">
+                    2022
+                  </span>
+                  <span className="text-xs uppercase tracking-widest text-slate-400 font-medium">
+                    BCS Higher Education
+                  </span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-purple-200 transition-colors duration-300">
+                  BCS Level 4 Certificate in IT
+                </h3>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
+                <span className="w-2 h-2 rounded-full bg-purple-400/80 shadow-[0_0_8px_rgba(192,132,252,0.6)]"></span>
+                <span>The Chartered Institute for IT</span>
+              </div>
+            </div>
+
+            {/* Certificate 2 */}
+            <div className="p-7 md:p-8 rounded-[2rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl hover:border-purple-500/40 transition-all duration-500 relative overflow-hidden group flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#2A0134]/30 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500 pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <span className="text-xs font-mono text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-3 py-1 rounded-full">
+                    2023
+                  </span>
+                  <span className="text-xs uppercase tracking-widest text-slate-400 font-medium">
+                    SLIIT
+                  </span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-purple-200 transition-colors duration-300">
+                  Java Programming Certification
+                </h3>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
+                <span className="w-2 h-2 rounded-full bg-cyan-400/80 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></span>
+                <span>Sri Lanka Institute of Information Technology (SLIIT)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {[
-          { id: 'certificates', title: 'Certificates' },
           { id: 'experience', title: 'Experience' },
           { id: 'leadership', title: 'Community & Leadership' },
-        ].map((section, idx) => (
+        ].map((section) => (
           <section
             key={section.id}
             id={section.id}
-            className={`scroll-mt-32 min-h-[60vh] p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500 ${
-              idx === 0 ? 'mt-24 md:mt-36' : ''
-            }`}
+            className="scroll-mt-32 min-h-[60vh] p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
 
