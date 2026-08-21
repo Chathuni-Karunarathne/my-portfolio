@@ -1,7 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import SkillsCarousel from "./skills-carousel";
 import ProjectsAccordion from "./projects-accordion";
 
 export default function Home() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
     <div className="bg-[#080010] text-white min-h-screen font-sans">
       {/* Navigation (Top Left Horizontal) */}
@@ -64,10 +69,14 @@ export default function Home() {
             Download my CV
           </a>
           {/* Contact Me — Neon glowing primary pill */}
-          <a href="#contact" className="relative w-full px-6 py-4 rounded-full text-center font-semibold text-white overflow-hidden backdrop-blur-2xl bg-[#2A0134]/80 border border-white/10 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_35px_rgba(42,1,52,1),0_0_60px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] hover:bg-[#3d024a]/80 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.5),0_0_50px_rgba(42,1,52,1),0_0_80px_rgba(42,1,52,0.6)] transition-all duration-300">
+          <button
+            type="button"
+            onClick={() => setIsContactOpen(true)}
+            className="relative w-full px-6 py-4 rounded-full text-center font-semibold text-white overflow-hidden backdrop-blur-2xl bg-[#2A0134]/80 border border-white/10 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_35px_rgba(42,1,52,1),0_0_60px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] hover:bg-[#3d024a]/80 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.5),0_0_50px_rgba(42,1,52,1),0_0_80px_rgba(42,1,52,0.6)] transition-all duration-300"
+          >
             <span className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
             Contact Me
-          </a>
+          </button>
         </div>
 
         {/* 3. THE WAVING AVATAR (Always centered) */}
@@ -87,6 +96,77 @@ export default function Home() {
           />
         </div>
       </header>
+
+      {isContactOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#030208]/75 backdrop-blur-sm px-4 py-6"
+          onClick={() => setIsContactOpen(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="relative w-full max-w-md rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-4 shadow-[0_0_0_1px_rgba(168,85,247,0.22),0_0_25px_rgba(42,1,52,0.7)] backdrop-blur-2xl md:p-5"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="Close contact form"
+              onClick={() => setIsContactOpen(false)}
+              className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full border border-purple-400/40 bg-[#1a0524]/60 text-base font-light text-purple-200 transition hover:bg-[#2A0134]/80 hover:text-white"
+            >
+              ×
+            </button>
+
+            <div className="space-y-4 pt-3">
+              <div>
+                <label htmlFor="name" className="mb-2 block text-base font-bold text-white md:text-lg">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)]"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="mb-2 block text-base font-bold text-white md:text-lg">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Your Email"
+                  className="w-full rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)]"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="mb-2 block text-base font-bold text-white md:text-lg">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  rows={4}
+                  placeholder="Your Message"
+                  className="w-full resize-none rounded-xl border border-[#2A0134]/70 bg-[#f2f2f2] px-3 py-3 text-base text-slate-900 placeholder:text-slate-500 outline-none transition focus:border-[#a855f7] focus:shadow-[0_0_0_2px_rgba(168,85,247,0.2)]"
+                />
+              </div>
+            </div>
+
+            <div className="mt-5 flex justify-center">
+              <button
+                type="button"
+                className="relative w-[78%] rounded-full border border-white/10 bg-[#2A0134]/80 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_35px_rgba(42,1,52,1),0_0_60px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:bg-[#3d024a]/80 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.5),0_0_50px_rgba(42,1,52,1),0_0_80px_rgba(42,1,52,0.6)]"
+              >
+                <span className="absolute top-0 left-5 right-5 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
+                Contact Me
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Sections Below Hero */}
       <main className="flex flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
@@ -292,9 +372,24 @@ export default function Home() {
             <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
           </h2>
 
-          <div className="w-full flex-grow flex items-center justify-center text-slate-500/50 italic text-xl font-light">
-            Content for Community & Leadership goes here...
-          </div>
+          <ul className="w-full space-y-4 text-slate-300 text-base md:text-lg">
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]"></span>
+              <span><strong className="font-semibold text-white">Hackelite 2.0, IEEE WIE Student Branch Affinity Group of UOM</strong><br />Co-Chairperson</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]"></span>
+              <span><strong className="font-semibold text-white">Annual General Meeting 2025, IEEE Professional Communication Society</strong><br />Leading Moderator</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]"></span>
+              <span><strong className="font-semibold text-white">Road to Legacy 2.0, IIEE of USJ</strong><br />Lead - Delegates Handling Committee</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.8)]"></span>
+              <span><strong className="font-semibold text-white">Binara Padura 2.0, Rotaract Club of University of Moratuwa</strong><br />Member - Finance Committee</span>
+            </li>
+          </ul>
         </section>
       </main>
     </div>
