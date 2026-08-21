@@ -38,8 +38,8 @@ function SkillBadge({ item }: { item: SkillItem }) {
           className="hexagon-halo"
           points="50 3, 93 25, 93 75, 50 97, 7 75, 7 25"
           fill="#0e0822"
-          stroke="#7c3aed"
-          strokeWidth="2.5"
+          stroke="#2A0134"
+          strokeWidth="1.5"
           strokeLinejoin="round"
         />
         <polygon
@@ -47,7 +47,7 @@ function SkillBadge({ item }: { item: SkillItem }) {
           points="50 3, 93 25, 93 75, 50 97, 7 75, 7 25"
           fill="none"
           stroke="#c084fc"
-          strokeWidth="1.8"
+          strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
           pathLength="100"
