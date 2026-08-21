@@ -173,11 +173,13 @@ export default function Home() {
           { id: 'certificates', title: 'Certificates' },
           { id: 'experience', title: 'Experience' },
           { id: 'leadership', title: 'Community & Leadership' },
-        ].map((section) => (
+        ].map((section, idx) => (
           <section
             key={section.id}
             id={section.id}
-            className="scroll-mt-32 min-h-[60vh] p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
+            className={`scroll-mt-32 min-h-[60vh] p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500 ${
+              idx === 0 ? 'mt-24 md:mt-36' : ''
+            }`}
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
 
