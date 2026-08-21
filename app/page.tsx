@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { siGithub, siGmail } from "simple-icons";
 import { useEffect, useState } from "react";
 import SkillsCarousel from "./skills-carousel";
@@ -18,6 +19,29 @@ const socialLinks = [
 export default function Home() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
+
+  const handleDownload = () => {
+    setIsDownloading(true);
+
+    const link = document.createElement("a");
+    link.href = "/cv.pdf";
+    link.download = "Chathuni_CV.pdf";
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.setTimeout(() => {
+      setIsDownloading(false);
+      setShowBanner(true);
+    }, 800);
+
+    window.setTimeout(() => {
+      setShowBanner(false);
+    }, 4800);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +59,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#080010] text-white font-sans">
+    <>
+      <div className="flex min-h-screen flex-col bg-[#080010] text-white font-sans">
       {/* Navigation (Top Left Horizontal) */}
       <nav className="fixed top-0 left-0 z-50 pt-3 px-6 md:pt-4 md:px-8 pointer-events-none w-full max-w-[100vw]">
         <ul className="flex flex-row flex-wrap items-center gap-4 lg:gap-8 pointer-events-auto relative px-6 py-3 rounded-full backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.6),0_0_30px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-max max-w-full overflow-x-auto no-scrollbar">
@@ -91,10 +116,27 @@ export default function Home() {
         {/* Right Side: CTAs (Aligned right with consistent vertical spacing) */}
         <div className="absolute right-6 lg:right-12 xl:right-24 z-20 flex flex-col gap-6 w-full max-w-[220px] items-center hidden md:flex">
           {/* Download CV — Transparent glass pill */}
-          <a href="/cv.pdf" className="relative w-full px-6 py-4 rounded-full text-center font-medium text-purple-200 overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_0_20px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_0_0_1px_rgba(168,85,247,0.4),0_0_30px_rgba(42,1,52,0.6)] hover:bg-white/[0.07] transition-all duration-300 group">
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={isDownloading}
+            className="relative w-full px-6 py-4 rounded-full text-center font-medium text-purple-200 overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_0_20px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_0_0_1px_rgba(168,85,247,0.4),0_0_30px_rgba(42,1,52,0.6)] hover:bg-white/[0.07] transition-all duration-300 group disabled:opacity-80 disabled:cursor-not-allowed"
+          >
             <span className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent"></span>
-            Download my CV
-          </a>
+            <span className="flex items-center justify-center gap-2">
+              {isDownloading ? (
+                <>
+                  <svg className="h-4 w-4 animate-spin text-purple-300" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Downloading...
+                </>
+              ) : (
+                "Download my CV"
+              )}
+            </span>
+          </button>
           {/* Contact Me — Neon glowing primary pill */}
           <button
             type="button"
@@ -455,5 +497,35 @@ export default function Home() {
         </button>
       )}
     </div>
+
+      <AnimatePresence>
+        {showBanner && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-8 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-3 rounded-2xl border border-purple-500/30 bg-[#0d0722]/90 px-5 py-3.5 text-sm font-medium text-purple-100 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+          >
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-purple-500/20 text-purple-300">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <span>CV downloaded successfully!</span>
+            <button
+              type="button"
+              aria-label="Dismiss notification"
+              onClick={() => setShowBanner(false)}
+              className="ml-2 rounded-lg p-1 text-purple-300/60 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
