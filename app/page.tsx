@@ -195,13 +195,15 @@ export default function Home() {
 
           {/* 3. THE WAVING AVATAR (Always centered) */}
           <div className="absolute z-10 inset-0 flex items-center justify-center pointer-events-none overflow-visible">
+            {/* White spotlight behind the avatar */}
+            <div className="absolute aspect-square w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[50px] pointer-events-none z-0"></div>
             <video
-              src="/avatar.webm"
+              src="/last.webm"
               autoPlay
               loop
               muted
               playsInline
-              className="h-[85vh] xl:h-[95vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+              className="h-[55vh] xl:h-[65vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10"
               style={{
                 maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
