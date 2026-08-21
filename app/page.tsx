@@ -181,56 +181,102 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full relative z-10">
             {/* Certificate 1 */}
-            <div className="cert-beam-wrapper group">
-              <div className="cert-beam-spinner" />
-              <div className="cert-beam-content p-7 md:p-8 flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-[#2A0134]/30 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500 pointer-events-none"></div>
+            <div className="relative p-7 md:p-8 rounded-[2rem] bg-[#1a0524]/60 backdrop-blur-xl border border-[#2A0134]/70 shadow-2xl overflow-hidden group flex flex-col justify-between hover:border-[#2A0134] transition-colors duration-300 min-h-[220px]">
+              {/* Single Slow Moving Glowing Line */}
+              <svg
+                className="absolute inset-0 h-full w-full pointer-events-none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="calc(100% - 2px)"
+                  height="calc(100% - 2px)"
+                  rx="31"
+                  fill="none"
+                  stroke="url(#cert-grad-1)"
+                  strokeWidth="1.8"
+                  className="cert-border-ray-1"
+                  pathLength="100"
+                />
+                <defs>
+                  <linearGradient id="cert-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#c084fc" />
+                    <stop offset="50%" stopColor="#e879f9" />
+                    <stop offset="100%" stopColor="#38bdf8" />
+                  </linearGradient>
+                </defs>
+              </svg>
 
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <span className="text-xs font-mono text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-3 py-1 rounded-full">
-                      2022
-                    </span>
-                    <span className="text-xs uppercase tracking-widest text-slate-400 font-medium">
-                      BCS Higher Education
-                    </span>
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-purple-200 transition-colors duration-300">
-                    BCS Level 4 Certificate in IT
-                  </h3>
-                </div>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#2A0134]/30 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500 pointer-events-none"></div>
 
-                <div className="mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
-                  <span className="w-2 h-2 rounded-full bg-purple-400/80 shadow-[0_0_8px_rgba(192,132,252,0.6)]"></span>
-                  <span>The Chartered Institute for IT</span>
+              <div className="relative z-10">
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <span className="text-xs font-mono text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-3 py-1 rounded-full">
+                    2022
+                  </span>
+                  <span className="text-xs uppercase tracking-widest text-slate-400 font-medium">
+                    BCS Higher Education
+                  </span>
                 </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-purple-200 transition-colors duration-300">
+                  BCS Level 4 Certificate in IT
+                </h3>
+              </div>
+
+              <div className="relative z-10 mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
+                <span className="w-2 h-2 rounded-full bg-purple-400/80 shadow-[0_0_8px_rgba(192,132,252,0.6)]"></span>
+                <span>The Chartered Institute for IT</span>
               </div>
             </div>
 
             {/* Certificate 2 */}
-            <div className="cert-beam-wrapper group">
-              <div className="cert-beam-spinner-delayed" />
-              <div className="cert-beam-content p-7 md:p-8 flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-[#2A0134]/30 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500 pointer-events-none"></div>
+            <div className="relative p-7 md:p-8 rounded-[2rem] bg-[#1a0524]/60 backdrop-blur-xl border border-[#2A0134]/70 shadow-2xl overflow-hidden group flex flex-col justify-between hover:border-[#2A0134] transition-colors duration-300 min-h-[220px]">
+              {/* Single Slow Moving Glowing Line */}
+              <svg
+                className="absolute inset-0 h-full w-full pointer-events-none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="calc(100% - 2px)"
+                  height="calc(100% - 2px)"
+                  rx="31"
+                  fill="none"
+                  stroke="url(#cert-grad-2)"
+                  strokeWidth="1.8"
+                  className="cert-border-ray-2"
+                  pathLength="100"
+                />
+                <defs>
+                  <linearGradient id="cert-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#38bdf8" />
+                    <stop offset="50%" stopColor="#c084fc" />
+                    <stop offset="100%" stopColor="#e879f9" />
+                  </linearGradient>
+                </defs>
+              </svg>
 
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <span className="text-xs font-mono text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-3 py-1 rounded-full">
-                      2023
-                    </span>
-                    <span className="text-xs uppercase tracking-widest text-slate-400 font-medium">
-                      SLIIT
-                    </span>
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-purple-200 transition-colors duration-300">
-                    Java Programming Certification
-                  </h3>
-                </div>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#2A0134]/30 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500 pointer-events-none"></div>
 
-                <div className="mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400/80 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></span>
-                  <span>Sri Lanka Institute of Information Technology (SLIIT)</span>
+              <div className="relative z-10">
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <span className="text-xs font-mono text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-3 py-1 rounded-full">
+                    2023
+                  </span>
+                  <span className="text-xs uppercase tracking-widest text-slate-400 font-medium">
+                    SLIIT
+                  </span>
                 </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white leading-snug group-hover:text-purple-200 transition-colors duration-300">
+                  Java Programming Certification
+                </h3>
+              </div>
+
+              <div className="relative z-10 mt-6 pt-4 border-t border-purple-500/10 flex items-center gap-2 text-xs text-slate-400">
+                <span className="w-2 h-2 rounded-full bg-cyan-400/80 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></span>
+                <span>Sri Lanka Institute of Information Technology (SLIIT)</span>
               </div>
             </div>
           </div>

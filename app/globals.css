@@ -50,75 +50,26 @@ body {
   }
 }
 
-/* Certificate Box Thin Slow Glowing Border Beam */
-.cert-beam-wrapper {
-  position: relative;
-  border-radius: 2rem;
-  overflow: hidden;
-  padding: 1px;
-  background: rgba(42, 1, 52, 0.4);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+/* Certificate Cards Single Slow Moving Glowing Border Ray */
+.cert-border-ray-1 {
+  stroke-dasharray: 20 80;
+  animation: cert-ray-loop 14s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(232, 121, 249, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
 }
 
-.cert-beam-wrapper:hover {
-  box-shadow: 0 20px 40px -10px rgba(42, 1, 52, 0.9), 0 0 25px rgba(168, 85, 247, 0.25);
+.cert-border-ray-2 {
+  stroke-dasharray: 20 80;
+  animation: cert-ray-loop 16s linear infinite;
+  animation-delay: -30s;
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 1)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8));
 }
 
-.cert-beam-spinner {
-  position: absolute;
-  inset: -150%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 75deg,
-    rgba(168, 85, 247, 0.3) 85deg,
-    rgba(232, 121, 249, 1) 95deg,
-    rgba(34, 211, 238, 1) 100deg,
-    rgba(168, 85, 247, 0.3) 105deg,
-    transparent 115deg,
-    transparent 360deg
-  );
-  animation: cert-beam 16s linear infinite;
-  filter: drop-shadow(0 0 6px rgba(232, 121, 249, 0.85));
-  pointer-events: none;
-}
-
-.cert-beam-spinner-delayed {
-  position: absolute;
-  inset: -150%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 75deg,
-    rgba(34, 211, 238, 0.3) 85deg,
-    rgba(168, 85, 247, 1) 95deg,
-    rgba(232, 121, 249, 1) 100deg,
-    rgba(34, 211, 238, 0.3) 105deg,
-    transparent 115deg,
-    transparent 360deg
-  );
-  animation: cert-beam 18s linear infinite;
-  animation-delay: -9s;
-  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.85));
-  pointer-events: none;
-}
-
-@keyframes cert-beam {
+@keyframes cert-ray-loop {
   from {
-    transform: rotate(0deg);
+    stroke-dashoffset: 100;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-.cert-beam-content {
-  position: relative;
-  z-index: 10;
-  border-radius: calc(2rem - 1px);
-  background: rgba(22, 5, 34, 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  height: 100%;
+  to {
+    stroke-dashoffset: 0;
+  }
 }
