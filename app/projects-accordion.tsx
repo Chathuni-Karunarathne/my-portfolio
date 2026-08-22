@@ -36,7 +36,7 @@ const projects: Project[] = [
         timeline: "12/2024 - 08/2025",
         description: "A physical arcade game powered by custom EasyEDA PCBs, rotary encoder paddle controls, and seven-segment displays synchronized via shift registers.",
         technologies: ["ESP32", "Arduino", "C++", "EasyEDA", "74HC595", "Rotary Encoders"],
-        image: "/retroclash.jpg",
+        image: "/retroclash.JPG",
     },
     {
         number: "04",
