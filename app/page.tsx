@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { siGithub, siGmail, siWhatsapp } from "simple-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import SkillsCarousel from "./skills-carousel";
 import ProjectsAccordion from "./projects-accordion";
 
@@ -23,6 +23,10 @@ export default function Home() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
 
+  // Video & Hero section refs
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+
   // Contact form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +34,48 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // 1. Time loop control (Plays full 10s video once, then loops 5s-10s)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      // Jump back to 5s when reaching the end of the 10s video
+      if (video.currentTime >= 9.9) {
+        video.currentTime = 5.0;
+        video.play();
+      }
+    };
+
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+  }, []);
+
+  // 2. Scroll observer (Restarts video from 0s when scrolling back to hero)
+  useEffect(() => {
+    const heroSection = heroRef.current;
+    const video = videoRef.current;
+    if (!heroSection || !video) return;
+
+    let hasScrolledAway = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          hasScrolledAway = true;
+        } else if (entry.isIntersecting && hasScrolledAway) {
+          video.currentTime = 0; // Restart intro from beginning
+          video.play();
+          hasScrolledAway = false;
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(heroSection);
+    return () => observer.disconnect();
+  }, []);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,7 +172,7 @@ export default function Home() {
         </nav>
 
         {/* Hero Section = #about landing page */}
-        <header id="about" className="relative min-h-screen flex items-center justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible">
+        <header ref={heroRef} id="about" className="relative min-h-screen flex items-center justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible">
 
           {/* 1. THE BIG BOLD 3D NAME */}
           <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
@@ -198,9 +244,9 @@ export default function Home() {
             {/* White spotlight behind the avatar */}
             <div className="absolute aspect-round w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[50px] pointer-events-none z-0"></div>
             <video
+              ref={videoRef}
               src="/onehundred.webm"
               autoPlay
-              loop
               muted
               playsInline
               className="h-[55vh] xl:h-[65vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10"
