@@ -35,24 +35,54 @@ export default function Home() {
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // 1. Time loop control (Plays full 10s video once, then loops 5s-10s)
+  // Ping-Pong (Reverse/Forward) Loop: Plays 0–10s, then oscillates between 6s and 10s
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleTimeUpdate = () => {
-      // Jump back to 5s when reaching the end of the 10s video
-      if (video.currentTime >= 9.9) {
-        video.currentTime = 5.0;
+    let isReversing = false;
+    let animFrameId: number;
+    let lastTime: number | null = null;
+
+    const reverseStep = (timestamp: number) => {
+      if (!isReversing) return;
+
+      if (lastTime !== null) {
+        const delta = (timestamp - lastTime) / 1000;
+        video.currentTime = Math.max(6.0, video.currentTime - delta);
+      }
+      lastTime = timestamp;
+
+      // Reached 6s -> Resume normal forward playback
+      if (video.currentTime <= 6.0) {
+        isReversing = false;
+        lastTime = null;
         video.play();
+        return;
+      }
+
+      animFrameId = requestAnimationFrame(reverseStep);
+    };
+
+    const handleTimeUpdate = () => {
+      // Reached 10s mark in forward playback -> Start reversing back to 6s
+      if (!isReversing && video.currentTime >= 9.9) {
+        video.pause();
+        isReversing = true;
+        lastTime = null;
+        animFrameId = requestAnimationFrame(reverseStep);
       }
     };
 
     video.addEventListener("timeupdate", handleTimeUpdate);
-    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+
+    return () => {
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+    };
   }, []);
 
-  // 2. Scroll observer (Restarts video from 0s when scrolling back to hero)
+  // Scroll observer (Restarts video from 0s when scrolling back to hero)
   useEffect(() => {
     const heroSection = heroRef.current;
     const video = videoRef.current;
@@ -186,23 +216,19 @@ export default function Home() {
           {/* 2. THE LIGHT GLOW */}
           <div className="absolute z-[1] aspect-square w-[50vw] rounded-full bg-[#2A0134] opacity-80 blur-[120px] pointer-events-none"></div>
 
-          {/* Left Side: About Me Card (Moved further left) */}
+          {/* Left Side: About Me Card */}
           <div className="absolute right-6 top-150 lg:right-12 xl:right-24 -translate-y-1/2 z-20 max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] hidden md:block">
-            {/* Inner top highlight line */}
             <div className="absolute top-0 right-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
-            {/* Corner accent dot */}
             <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
             <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! </h2>
             <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
               I&apos;m An IT &amp; Management undergraduate at the University of Moratuwa.
               I’m drawn to things that let me create, experiment, and leave a little bit of my own touch behind.
-
             </p>
           </div>
 
-          {/* Right Side: CTAs (Aligned right with consistent vertical spacing) */}
+          {/* Right Side: CTAs */}
           <div className="absolute left-6 lg:left-12 xl:left-24 top-100 z-20 flex flex-col gap-6 w-full max-w-[220px] items-center hidden md:flex">
-            {/* Download CV — Transparent glass pill */}
             <button
               type="button"
               onClick={handleDownload}
@@ -224,7 +250,6 @@ export default function Home() {
                 )}
               </span>
             </button>
-            {/* Contact Me — Neon glowing primary pill */}
             <button
               type="button"
               onClick={() => {
@@ -241,7 +266,6 @@ export default function Home() {
 
           {/* 3. THE WAVING AVATAR (Always centered) */}
           <div className="absolute z-10 inset-0 flex items-center justify-center pointer-events-none overflow-visible">
-            {/* White spotlight behind the avatar */}
             <div className="absolute aspect-round w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[50px] pointer-events-none z-0"></div>
             <video
               ref={videoRef}
@@ -357,7 +381,7 @@ export default function Home() {
         {/* Sections Below Hero */}
         <main className="flex flex-1 flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
 
-          {/* ── Education ── */}
+          {/* Education */}
           <section
             id="education"
             className="scroll-mt-32 min-h-fit p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
@@ -370,8 +394,6 @@ export default function Home() {
             </h2>
 
             <div className="w-full flex flex-col gap-6 relative z-10">
-
-              {/* University Card */}
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-[0_0_0_1px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#2A0134]/60 transition-all duration-300 group/card">
                 <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
                   <div>
@@ -394,7 +416,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* A/L Card */}
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-[0_0_0_1px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#2A0134]/60 transition-all duration-300">
                 <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
                   <div>
@@ -415,11 +436,10 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
             </div>
           </section>
 
-          {/* ── Remaining Sections ── */}
+          {/* Technical Skills */}
           <section
             id="skills"
             className="scroll-mt-32 min-h-fit px-0 py-8 relative"
@@ -434,7 +454,7 @@ export default function Home() {
 
           <ProjectsAccordion />
 
-          {/* ── Certificates ── */}
+          {/* Certificates */}
           <section
             id="certificates"
             className="scroll-mt-32 min-h-fit px-0 py-8 relative mt-16 md:mt-24"
@@ -445,13 +465,8 @@ export default function Home() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full relative z-10">
-              {/* Certificate 1 */}
               <div className="relative p-7 md:p-8 rounded-[2rem] bg-[#1a0524]/60 backdrop-blur-xl border border-[#2A0134]/70 shadow-2xl overflow-hidden group flex flex-col justify-between hover:border-[#2A0134] transition-colors duration-300 min-h-[220px]">
-                {/* Single Slow Moving Glowing Line */}
-                <svg
-                  className="absolute inset-0 h-full w-full pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg className="absolute inset-0 h-full w-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                   <rect
                     x="1"
                     y="1"
@@ -495,13 +510,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Certificate 2 */}
               <div className="relative p-7 md:p-8 rounded-[2rem] bg-[#1a0524]/60 backdrop-blur-xl border border-[#2A0134]/70 shadow-2xl overflow-hidden group flex flex-col justify-between hover:border-[#2A0134] transition-colors duration-300 min-h-[220px]">
-                {/* Single Slow Moving Glowing Line */}
-                <svg
-                  className="absolute inset-0 h-full w-full pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg className="absolute inset-0 h-full w-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                   <rect
                     x="1"
                     y="1"
@@ -547,6 +557,7 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Community & Leadership */}
           <section
             id="leadership"
             className="scroll-mt-32 min-h-[60vh] p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
