@@ -141,12 +141,12 @@ export default function Home() {
           <div className="absolute z-[1] aspect-square w-[50vw] rounded-full bg-[#2A0134] opacity-80 blur-[120px] pointer-events-none"></div>
 
           {/* Left Side: About Me Card (Moved further left) */}
-          <div className="absolute left-6 lg:left-12 xl:left-24 top-1/2 -translate-y-1/2 z-20 max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] hidden md:block">
+          <div className="absolute right-6 top-150 lg:right-12 xl:right-24 -translate-y-1/2 z-20 max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] hidden md:block">
             {/* Inner top highlight line */}
-            <div className="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 right-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
             {/* Corner accent dot */}
             <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
-            <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! 👋</h2>
+            <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! </h2>
             <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
               I&apos;m An IT &amp; Management undergraduate at the University of Moratuwa.
               I’m drawn to things that let me create, experiment, and leave a little bit of my own touch behind.
@@ -155,7 +155,7 @@ export default function Home() {
           </div>
 
           {/* Right Side: CTAs (Aligned right with consistent vertical spacing) */}
-          <div className="absolute right-6 lg:right-12 xl:right-24 z-20 flex flex-col gap-6 w-full max-w-[220px] items-center hidden md:flex">
+          <div className="absolute left-6 lg:left-12 xl:left-24 top-100 z-20 flex flex-col gap-6 w-full max-w-[220px] items-center hidden md:flex">
             {/* Download CV — Transparent glass pill */}
             <button
               type="button"
@@ -196,9 +196,9 @@ export default function Home() {
           {/* 3. THE WAVING AVATAR (Always centered) */}
           <div className="absolute z-10 inset-0 flex items-center justify-center pointer-events-none overflow-visible">
             {/* White spotlight behind the avatar */}
-            <div className="absolute aspect-square w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[50px] pointer-events-none z-0"></div>
+            <div className="absolute aspect-round w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[50px] pointer-events-none z-0"></div>
             <video
-              src="/last.webm"
+              src="/onehundred.webm"
               autoPlay
               loop
               muted
