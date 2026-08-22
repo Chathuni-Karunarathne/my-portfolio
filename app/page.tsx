@@ -1,4 +1,7 @@
 "use client";
+<head>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+</head>
 
 import { AnimatePresence, motion } from "framer-motion";
 import { siGithub, siGmail, siWhatsapp } from "simple-icons";
