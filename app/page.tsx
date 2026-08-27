@@ -25,6 +25,7 @@ export default function Home() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   // Video & Hero section refs
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -174,6 +175,27 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-50% 0px -50% 0px" }
+    );
+
+    const sections = ['about', 'education', 'skills', 'projects', 'certificates', 'leadership'];
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -195,7 +217,11 @@ export default function Home() {
               <li key={item.id} className="whitespace-nowrap">
                 <a
                   href={`#${item.id}`}
-                  className="text-slate-300 hover:text-purple-300 hover:-translate-y-0.5 transition-all duration-300 flex items-center text-sm md:text-sm lg:text-base font-medium"
+                  className={`px-3 py-1.5 rounded-full transition-all duration-300 flex items-center text-sm md:text-sm lg:text-base font-medium ${
+                    activeSection === item.id 
+                      ? "text-purple-200 bg-purple-500/20 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-105" 
+                      : "text-slate-300 hover:text-purple-300 border border-transparent hover:-translate-y-0.5"
+                  }`}
                 >
                   {item.label}
                 </a>
