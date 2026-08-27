@@ -119,7 +119,7 @@ export default function SkillsCarousel() {
         touchStartX.current = null;
       }}
     >
-      <div className="relative mx-auto h-[30rem] w-full max-w-6xl [perspective:1200px] [transform-style:preserve-3d] md:h-[27rem]">
+      <div className="relative mx-auto h-[35rem] w-full max-w-6xl [perspective:1200px] [transform-style:preserve-3d] md:h-[27rem]">
         {cards.map((card, index) => {
           const position = relativePosition(index, activeIndex);
           const isActive = position === 0;
@@ -152,10 +152,10 @@ export default function SkillsCarousel() {
           );
         })}
 
-        <button type="button" aria-label="Previous skills category" onClick={() => move(-1)} className="absolute left-2 top-1/2 z-40 -translate-y-1/2 rounded-full border border-purple-500/30 bg-purple-950/60 p-3 text-purple-200 transition-all hover:bg-purple-600 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.6)] md:left-8">
+        <button type="button" aria-label="Previous skills category" onClick={() => move(-1)} className="absolute left-1 top-1/2 z-40 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-purple-500/30 bg-purple-950/60 text-purple-200 transition-all hover:bg-purple-600 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.6)] md:left-6 md:h-12 md:w-12">
           <span aria-hidden="true" className="text-xl leading-none">&lt;</span>
         </button>
-        <button type="button" aria-label="Next skills category" onClick={() => move(1)} className="absolute right-2 top-1/2 z-40 -translate-y-1/2 rounded-full border border-purple-500/30 bg-purple-950/60 p-3 text-purple-200 transition-all hover:bg-purple-600 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.6)] md:right-8">
+        <button type="button" aria-label="Next skills category" onClick={() => move(1)} className="absolute right-1 top-1/2 z-40 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border border-purple-500/30 bg-purple-950/60 text-purple-200 transition-all hover:bg-purple-600 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.6)] md:right-6 md:h-12 md:w-12">
           <span aria-hidden="true" className="text-xl leading-none">&gt;</span>
         </button>
       </div>

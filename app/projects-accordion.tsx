@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll } from "framer-motion";
 
@@ -82,20 +82,29 @@ function Card({
     project: Project;
     index: number;
 }) {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
     const containerRef = useRef<HTMLDivElement>(null);
     useScroll({
         target: containerRef,
         offset: ["start end", "start start"],
     });
 
-    const TITLE_HEIGHT = 80;
-    const HEADER_STEP = 92;
+    const TITLE_HEIGHT = isMobile ? 60 : 80;
+    const HEADER_STEP = isMobile ? 65 : 92;
     const topMargin = index === 0 ? 0 : TITLE_HEIGHT + index * HEADER_STEP;
 
     return (
         <div
             ref={containerRef}
-            className="sticky top-20 flex h-[65vh] items-start justify-center"
+            className="sticky top-16 md:top-20 flex h-auto min-h-[65vh] items-start justify-center pb-8 md:pb-0"
             style={{
                 paddingTop: `${topMargin}px`,
                 zIndex: index + 10,
@@ -103,39 +112,39 @@ function Card({
         >
             <div className="w-full">
                 {index === 0 && (
-                    <div className="mb-5 h-[60px]">
-                        <h2 className="text-4xl md:text-5xl font-black text-white/90 tracking-tight">
+                    <div className="mb-4 md:mb-5 h-[50px] md:h-[60px]">
+                        <h2 className="text-3xl md:text-5xl font-black text-white/90 tracking-tight">
                             Projects
                             <span className="block w-24 h-1.5 bg-[#2A0134] mt-3 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
                         </h2>
                     </div>
                 )}
-                <motion.article className="relative w-full rounded-[2rem] border border-[#2A0134]/70 bg-[#1a0524]/60 p-6 shadow-2xl backdrop-blur-xl overflow-hidden md:px-8 md:pt-6 md:pb-8">
+                <motion.article className="relative w-full rounded-[1.5rem] md:rounded-[2rem] border border-[#2A0134]/70 bg-[#1a0524]/60 p-5 md:p-6 shadow-2xl backdrop-blur-xl overflow-hidden md:px-8 md:pt-6 md:pb-8">
                     <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,_rgba(168,85,247,0.14),_transparent_55%)]" />
-                    <div className="flex w-full relative z-10 items-center gap-4 border-b border-purple-500/20 pb-3.5 md:gap-6">
-                        <span className="text-3xl font-black text-white/90 md:text-5xl">
+                    <div className="flex w-full relative z-10 items-center gap-3 md:gap-4 border-b border-purple-500/20 pb-3 md:pb-3.5">
+                        <span className="text-2xl md:text-5xl font-black text-white/90">
                             {project.number}
                         </span>
                         <span className="min-w-0 flex-1">
-                            <span className="block truncate text-base font-bold text-white md:text-xl">
+                            <span className="block truncate text-base md:text-xl font-bold text-white whitespace-normal leading-tight">
                                 {project.title}
                             </span>
-                            <span className="mt-0.5 block truncate text-xs font-medium text-slate-400 md:text-sm">
+                            <span className="mt-1 md:mt-0.5 block truncate text-xs md:text-sm font-medium text-slate-400">
                                 {project.timeline}
                             </span>
                         </span>
                     </div>
 
-                    <div className="mt-5 grid gap-6 md:grid-cols-[1.1fr_1fr]">
+                    <div className="mt-4 md:mt-5 grid grid-cols-1 gap-5 md:gap-6 md:grid-cols-[1.1fr_1fr]">
                         <div>
-                            <p className="text-sm leading-relaxed text-slate-300 md:text-base">
+                            <p className="text-sm md:text-base leading-relaxed text-slate-300">
                                 {project.description}
                             </p>
-                            <div className="mt-5 flex flex-wrap gap-2">
+                            <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
                                 {project.technologies.map((tech) => (
                                     <span
                                         key={tech}
-                                        className="rounded-full border border-purple-400/40 bg-[#2A0134]/80 px-3 py-1 text-xs font-medium text-purple-100 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_20px_rgba(42,1,52,0.5)]"
+                                        className="rounded-full border border-purple-400/40 bg-[#2A0134]/80 px-2.5 py-1 md:px-3 text-xs md:text-sm font-medium text-purple-100 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_20px_rgba(42,1,52,0.5)]"
                                     >
                                         {tech}
                                     </span>

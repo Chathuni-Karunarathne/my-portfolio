@@ -26,6 +26,7 @@ export default function Home() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Video & Hero section refs
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -203,9 +204,10 @@ export default function Home() {
   return (
     <>
       <div className="flex min-h-screen flex-col bg-[#080010] text-white font-sans">
-        {/* Navigation (Top Left Horizontal) */}
-        <nav className="fixed top-0 left-0 z-50 pt-3 px-6 md:pt-4 md:px-8 pointer-events-none w-full max-w-[100vw]">
-          <ul className="flex flex-row flex-wrap items-center gap-4 lg:gap-8 pointer-events-auto relative px-6 py-3 rounded-full backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.6),0_0_30px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-max max-w-full overflow-x-auto no-scrollbar">
+        {/* Navigation */}
+        <nav className="fixed top-0 left-0 z-50 pt-3 px-6 md:pt-4 md:px-8 pointer-events-none w-full max-w-[100vw] flex justify-between items-start">
+          {/* Desktop Nav (hidden on mobile) */}
+          <ul className="hidden md:flex flex-row flex-wrap items-center gap-4 lg:gap-8 pointer-events-auto relative px-6 py-3 rounded-full backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.6),0_0_30px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-max max-w-full overflow-x-auto no-scrollbar">
             {[
               { id: 'about', label: 'About' },
               { id: 'education', label: 'Education' },
@@ -217,7 +219,7 @@ export default function Home() {
               <li key={item.id} className="whitespace-nowrap">
                 <a
                   href={`#${item.id}`}
-                  className={`px-3 py-1.5 rounded-full transition-all duration-300 flex items-center text-sm md:text-sm lg:text-base font-medium ${
+                  className={`px-3 py-1.5 rounded-full transition-all duration-300 flex items-center text-sm lg:text-base font-medium ${
                     activeSection === item.id 
                       ? "text-purple-200 bg-purple-500/20 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-105" 
                       : "text-slate-300 hover:text-purple-300 border border-transparent hover:-translate-y-0.5"
@@ -228,26 +230,78 @@ export default function Home() {
               </li>
             ))}
           </ul>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            className="md:hidden pointer-events-auto relative p-3 rounded-full backdrop-blur-2xl bg-white/[0.1] border border-white/20 shadow-[0_0_15px_rgba(42,1,52,0.8)] text-white z-[60] ml-auto"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </nav>
 
+        {/* Mobile Menu Drawer */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="fixed inset-0 z-40 bg-[#080010]/95 backdrop-blur-3xl pt-24 px-6 md:hidden flex flex-col items-center gap-6 overflow-y-auto"
+            >
+              <ul className="flex flex-col items-center gap-6 mt-10 w-full max-w-[280px]">
+                {[
+                  { id: 'about', label: 'About' },
+                  { id: 'education', label: 'Education' },
+                  { id: 'skills', label: 'Technical Skills' },
+                  { id: 'projects', label: 'Projects' },
+                  { id: 'certificates', label: 'Certificates' },
+                  { id: 'leadership', label: 'Community & Leadership' },
+                ].map((item) => (
+                  <li key={item.id} className="w-full text-center">
+                    <a
+                      href={`#${item.id}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block w-full px-6 py-4 rounded-2xl transition-all duration-300 text-lg font-medium border ${
+                        activeSection === item.id 
+                          ? "text-purple-100 bg-purple-500/30 border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.5)]" 
+                          : "text-slate-300 border-white/5 bg-white/5 hover:text-purple-300 hover:bg-white/10"
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Hero Section = #about landing page */}
-        <header ref={heroRef} id="about" className="relative min-h-screen flex items-center justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible">
+        <header ref={heroRef} id="about" className="relative min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible pt-24 md:pt-0 pb-16 md:pb-0">
 
           {/* 1. THE BIG BOLD 3D NAME */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none">
-            <h6 className="text-[12vw] font-black text-white uppercase select-none tracking-[-0.05em] opacity-80 -translate-y-52
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none overflow-hidden">
+            <h6 className="text-[18vw] md:text-[12vw] font-black text-white uppercase select-none tracking-[-0.05em] opacity-80 -translate-y-[15vh] md:-translate-y-52
             [text-shadow:_1px_1px_0_#ccc,_2px_2px_0_#c5c5c5,_3px_3px_0_#bbb,_4px_4px_0_#b0b0b0,_5px_5px_0_#aaa,_6px_6px_0_#999,_7px_7px_0_#888,_8px_8px_20px_rgba(0,0,0,0.6)]
-            leading-[0.8]">
+            leading-[0.8] whitespace-nowrap">
               CHATHUNI
             </h6>
           </div>
 
           {/* 2. THE LIGHT GLOW */}
-          <div className="absolute z-[1] aspect-square w-[50vw] rounded-full bg-[#2A0134] opacity-80 blur-[120px] pointer-events-none"></div>
+          <div className="absolute z-[1] aspect-square w-[80vw] md:w-[50vw] rounded-full bg-[#2A0134] opacity-80 blur-[80px] md:blur-[120px] pointer-events-none"></div>
 
           {/* Left Side: About Me Card */}
-          <div className="absolute right-6 top-150 lg:right-12 xl:right-24 -translate-y-1/2 z-20 max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] hidden md:block">
-            <div className="absolute top-0 right-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
+          <div className="relative md:absolute w-[90%] md:w-auto mt-8 md:mt-0 order-2 md:order-none right-auto md:right-6 top-auto md:top-150 lg:right-12 xl:right-24 md:-translate-y-1/2 z-20 max-w-[320px] md:max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] block">
+            <div className="absolute top-0 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none w-1/2"></div>
             <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
             <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! </h2>
             <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
@@ -257,7 +311,7 @@ export default function Home() {
           </div>
 
           {/* Right Side: CTAs */}
-          <div className="absolute left-6 lg:left-12 xl:left-24 top-100 z-20 flex flex-col gap-6 w-full max-w-[220px] items-center hidden md:flex">
+          <div className="relative md:absolute w-[90%] md:w-auto mt-6 md:mt-0 order-3 md:order-none left-auto md:left-6 lg:left-12 xl:left-24 top-auto md:top-100 z-20 flex flex-col sm:flex-row md:flex-col gap-4 md:gap-6 max-w-[400px] md:max-w-[220px] items-center flex">
             <button
               type="button"
               onClick={handleDownload}
@@ -294,15 +348,15 @@ export default function Home() {
           </div>
 
           {/* 3. THE WAVING AVATAR (Always centered) */}
-          <div className="absolute z-10 inset-0 flex items-center justify-center pointer-events-none overflow-visible">
-            <div className="absolute aspect-round w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[50px] pointer-events-none z-0"></div>
+          <div className="relative md:absolute w-[100%] md:w-auto order-1 md:order-none z-10 inset-0 md:inset-0 flex items-center justify-center pointer-events-none overflow-visible h-[45vh] md:h-auto">
+            <div className="absolute aspect-square w-[75vw] md:w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[40px] md:blur-[50px] pointer-events-none z-0"></div>
             <video
               ref={videoRef}
               src="/onehundred.webm"
               autoPlay
               muted
               playsInline
-              className="h-[55vh] xl:h-[65vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10"
+              className="h-[45vh] xl:h-[65vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10 md:static"
               style={{
                 maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
@@ -408,16 +462,16 @@ export default function Home() {
         )}
 
         {/* Sections Below Hero */}
-        <main className="flex flex-1 flex-col gap-16 py-24 px-6 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
+        <main className="flex flex-1 flex-col gap-12 md:gap-16 py-16 md:py-24 px-5 md:px-16 lg:px-32 relative z-10 bg-[#080010]">
 
           {/* Education */}
           <section
             id="education"
-            className="scroll-mt-32 min-h-fit p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
+            className="scroll-mt-24 md:scroll-mt-32 min-h-fit p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
+            <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-[#2A0134]/30 rounded-full blur-[60px] md:blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
 
-            <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-10 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-white/90 mb-8 md:mb-10 tracking-tight">
               Education
               <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
             </h2>
@@ -488,7 +542,7 @@ export default function Home() {
             id="certificates"
             className="scroll-mt-32 min-h-fit px-0 py-8 relative mt-16 md:mt-24"
           >
-            <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-8 tracking-tight relative z-10">
+            <h2 className="text-3xl md:text-5xl font-black text-white/90 mb-6 md:mb-8 tracking-tight relative z-10">
               Certificates
               <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
             </h2>
@@ -589,11 +643,11 @@ export default function Home() {
           {/* Community & Leadership */}
           <section
             id="leadership"
-            className="scroll-mt-32 min-h-[60vh] p-8 md:p-12 rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
+            className="scroll-mt-24 md:scroll-mt-32 min-h-[50vh] md:min-h-[60vh] p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-[#1a0524]/40 backdrop-blur-xl border border-[#2A0134]/50 shadow-2xl flex flex-col items-start justify-start relative overflow-hidden group hover:border-[#2A0134] transition-colors duration-500"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A0134]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
+            <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-[#2A0134]/30 rounded-full blur-[60px] md:blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#2A0134]/60 transition-colors duration-500"></div>
 
-            <h2 className="text-4xl md:text-5xl font-black text-white/90 mb-8 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-white/90 mb-8 tracking-tight">
               Community & Leadership
               <span className="block w-24 h-1.5 bg-[#2A0134] mt-4 rounded-full shadow-[0_0_10px_rgba(42,1,52,0.8)]"></span>
             </h2>
