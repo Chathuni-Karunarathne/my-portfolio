@@ -219,11 +219,10 @@ export default function Home() {
               <li key={item.id} className="whitespace-nowrap">
                 <a
                   href={`#${item.id}`}
-                  className={`px-3 py-1.5 rounded-full transition-all duration-300 flex items-center text-sm lg:text-base font-medium ${
-                    activeSection === item.id 
-                      ? "text-purple-200 bg-purple-500/20 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-105" 
-                      : "text-slate-300 hover:text-purple-300 border border-transparent hover:-translate-y-0.5"
-                  }`}
+                  className={`px-3 py-1.5 rounded-full transition-all duration-300 flex items-center text-sm lg:text-base font-medium ${activeSection === item.id
+                    ? "text-purple-200 bg-purple-500/20 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-105"
+                    : "text-slate-300 hover:text-purple-300 border border-transparent hover:-translate-y-0.5"
+                    }`}
                 >
                   {item.label}
                 </a>
@@ -239,9 +238,9 @@ export default function Home() {
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMobileMenuOpen ? (
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
@@ -269,11 +268,10 @@ export default function Home() {
                     <a
                       href={`#${item.id}`}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block w-full px-6 py-4 rounded-2xl transition-all duration-300 text-lg font-medium border ${
-                        activeSection === item.id 
-                          ? "text-purple-100 bg-purple-500/30 border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.5)]" 
-                          : "text-slate-300 border-white/5 bg-white/5 hover:text-purple-300 hover:bg-white/10"
-                      }`}
+                      className={`block w-full px-6 py-4 rounded-2xl transition-all duration-300 text-lg font-medium border ${activeSection === item.id
+                        ? "text-purple-100 bg-purple-500/30 border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.5)]"
+                        : "text-slate-300 border-white/5 bg-white/5 hover:text-purple-300 hover:bg-white/10"
+                        }`}
                     >
                       {item.label}
                     </a>

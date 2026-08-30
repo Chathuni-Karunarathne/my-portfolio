@@ -34,22 +34,19 @@ function SkillBadge({ item }: { item: SkillItem }) {
   return (
     <div className="group relative flex h-20 w-20 shrink-0 items-center justify-center" title={item.name}>
       <svg className="hexagon-glow absolute inset-0 h-full w-full transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1" viewBox="0 0 100 100" aria-hidden="true">
-        <polygon
-          className="hexagon-halo"
-          points="50 3, 93 25, 93 75, 50 97, 7 75, 7 25"
+        <rect
+          className="square-halo"
+          x="12" y="12" width="76" height="76" rx="20"
           fill="#0e0822"
           stroke="#2A0134"
           strokeWidth="1.5"
-          strokeLinejoin="round"
         />
-        <polygon
-          className="hexagon-outline"
-          points="50 3, 93 25, 93 75, 50 97, 7 75, 7 25"
+        <rect
+          className="square-outline"
+          x="12" y="12" width="76" height="76" rx="20"
           fill="none"
           stroke="#c084fc"
           strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
           pathLength="100"
         />
       </svg>
