@@ -306,7 +306,7 @@ export default function Home() {
           </div>
 
           {/* Left Side: CTAs */}
-          <div className="relative md:absolute w-[90%] md:w-auto mt-6 md:mt-0 order-2 md:order-none left-auto md:left-6 lg:left-12 xl:left-24 top-auto md:top-[65%] md:-translate-y-1/2 z-20 flex flex-col sm:flex-row md:flex-col gap-4 md:gap-6 max-w-[400px] md:max-w-[220px] items-center">
+          <div className="relative md:absolute w-[90%] md:w-auto mt-6 md:mt-0 order-2 md:order-none left-auto md:left-6 lg:left-12 xl:left-24 top-auto md:top-[60%] md:-translate-y-1/2 z-20 flex flex-col sm:flex-row md:flex-col gap-4 md:gap-5 max-w-[400px] md:max-w-[220px] items-center">
             <button
               type="button"
               onClick={handleDownload}
@@ -340,6 +340,24 @@ export default function Home() {
               <span className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
               Contact Me
             </button>
+          </div>
+
+          {/* Social Icons (Very Bottom Left) */}
+          <div className="relative md:absolute w-[90%] md:w-auto mt-6 md:mt-0 order-3 md:order-none left-auto md:left-6 lg:left-12 xl:left-24 bottom-6 md:bottom-8 z-20 flex items-center justify-center md:justify-start gap-3">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="p-2.5 rounded-full backdrop-blur-xl bg-white/[0.04] border border-white/10 text-slate-300 hover:text-purple-300 hover:bg-purple-500/20 hover:border-purple-500/40 shadow-[0_0_0_1px_rgba(42,1,52,0.4),0_4px_12px_rgba(0,0,0,0.4)] hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all duration-300 hover:-translate-y-1 flex items-center justify-center"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d={social.icon.path} />
+                </svg>
+              </a>
+            ))}
           </div>
 
           {/* Right Side: About Me Card */}
