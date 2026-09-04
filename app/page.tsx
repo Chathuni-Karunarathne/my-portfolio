@@ -679,29 +679,58 @@ export default function Home() {
           </section>
         </main>
 
-        <div className="border-t border-white/10 bg-[#0b0618]/80 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-4 px-6 py-5">
-            <div className="flex items-center gap-4">
-              {socialLinks.map(({ href, label, icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noreferrer" : undefined}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-purple-400/40 bg-[#1a0524]/70 text-purple-200 shadow-[0_0_0_1px_rgba(168,85,247,0.3),0_0_16px_rgba(42,1,52,0.7)] transition hover:bg-[#2A0134]/80 hover:text-white"
-                  aria-label={label}
-                >
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
-                    <path d={icon.path} />
-                  </svg>
-                </a>
-              ))}
+        <footer className="border-t border-white/10 bg-[#080010]/90 backdrop-blur-xl py-8 px-6">
+          <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-xs sm:text-sm md:text-base font-medium text-slate-300 tracking-wide">
+              <a
+                href="mailto:chathunik27@gmail.com"
+                className="group flex items-center gap-1.5 transition-all duration-300 hover:text-purple-300"
+              >
+                <span>chathunik27@gmail.com</span>
+                <span className="text-xs transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-400">↗</span>
+              </a>
+              <a
+                href="https://github.com/Chathuni-Karunarathne"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-1.5 transition-all duration-300 hover:text-purple-300"
+              >
+                <span>Chathuni-Karunarathne</span>
+                <span className="text-xs transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-400">↗</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/chathuni-k"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-1.5 transition-all duration-300 hover:text-purple-300"
+              >
+                <span>in/chathuni-k</span>
+                <span className="text-xs transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-400">↗</span>
+              </a>
+              <a
+                href="https://wa.me/94762132822"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-1.5 transition-all duration-300 hover:text-purple-300"
+              >
+                <span>+94 76 213 2822</span>
+                <span className="text-xs transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-400">↗</span>
+              </a>
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={isDownloading}
+                className="group flex items-center gap-1.5 transition-all duration-300 hover:text-purple-300 cursor-pointer bg-transparent border-0 p-0 text-slate-300 font-medium text-xs sm:text-sm md:text-base tracking-wide disabled:opacity-50"
+              >
+                <span>PDF, 2026</span>
+                <span className="text-xs transition-transform duration-300 group-hover:translate-y-0.5 text-purple-400">↓</span>
+              </button>
             </div>
-            <div className="text-center text-sm text-slate-300 md:text-base">
-              <span className="font-medium tracking-wide">© 2026 Chathuni Karunarathne. All Rights Reserved.</span>
+            <div className="text-center text-xs text-slate-500">
+              <span>© 2026 Chathuni Karunarathne. All Rights Reserved.</span>
             </div>
           </div>
-        </div>
+        </footer>
 
         {showScrollToTop && (
           <button
