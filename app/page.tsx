@@ -40,7 +40,7 @@ export default function Home() {
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Ping-Pong (Reverse/Forward) Loop: Plays 0–10s, then oscillates between 5s and 10s
+  // Ping-Pong (Reverse/Forward) Loop: Plays 0–10s, then oscillates between 7s and 10s
   const isReversingRef = useRef(false);
   const animFrameRef = useRef<number | null>(null);
 
@@ -55,12 +55,12 @@ export default function Home() {
 
       if (lastTime !== null) {
         const delta = (timestamp - lastTime) / 1000;
-        video.currentTime = Math.max(5.0, video.currentTime - delta);
+        video.currentTime = Math.max(7.0, video.currentTime - delta);
       }
       lastTime = timestamp;
 
-      // Reached 5s -> Resume normal forward playback
-      if (video.currentTime <= 5.0) {
+      // Reached 7s -> Resume normal forward playback
+      if (video.currentTime <= 7.0) {
         isReversingRef.current = false;
         lastTime = null;
         video.play();
@@ -71,8 +71,8 @@ export default function Home() {
     };
 
     const handleTimeUpdate = () => {
-      // Reached end of forward playback -> Start reversing back to 5s
-      const endThreshold = video.duration ? Math.max(video.duration - 0.15, 5.1) : 9.9;
+      // Reached end of forward playback -> Start reversing back to 7s
+      const endThreshold = video.duration ? Math.max(video.duration - 0.15, 7.1) : 9.9;
       if (!isReversingRef.current && video.currentTime >= endThreshold) {
         video.pause();
         isReversingRef.current = true;
