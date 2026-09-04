@@ -40,42 +40,44 @@ export default function Home() {
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Ping-Pong (Reverse/Forward) Loop: Plays 0–10s, then oscillates between 6s and 10s
+  // Ping-Pong (Reverse/Forward) Loop: Plays 0–10s, then oscillates between 5s and 10s
+  const isReversingRef = useRef(false);
+  const animFrameRef = useRef<number | null>(null);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    let isReversing = false;
-    let animFrameId: number;
     let lastTime: number | null = null;
 
     const reverseStep = (timestamp: number) => {
-      if (!isReversing) return;
+      if (!isReversingRef.current) return;
 
       if (lastTime !== null) {
         const delta = (timestamp - lastTime) / 1000;
-        video.currentTime = Math.max(6.0, video.currentTime - delta);
+        video.currentTime = Math.max(5.0, video.currentTime - delta);
       }
       lastTime = timestamp;
 
-      // Reached 6s -> Resume normal forward playback
-      if (video.currentTime <= 6.0) {
-        isReversing = false;
+      // Reached 5s -> Resume normal forward playback
+      if (video.currentTime <= 5.0) {
+        isReversingRef.current = false;
         lastTime = null;
         video.play();
         return;
       }
 
-      animFrameId = requestAnimationFrame(reverseStep);
+      animFrameRef.current = requestAnimationFrame(reverseStep);
     };
 
     const handleTimeUpdate = () => {
-      // Reached 10s mark in forward playback -> Start reversing back to 6s
-      if (!isReversing && video.currentTime >= 9.9) {
+      // Reached end of forward playback -> Start reversing back to 5s
+      const endThreshold = video.duration ? Math.max(video.duration - 0.15, 5.1) : 9.9;
+      if (!isReversingRef.current && video.currentTime >= endThreshold) {
         video.pause();
-        isReversing = true;
+        isReversingRef.current = true;
         lastTime = null;
-        animFrameId = requestAnimationFrame(reverseStep);
+        animFrameRef.current = requestAnimationFrame(reverseStep);
       }
     };
 
@@ -83,7 +85,7 @@ export default function Home() {
 
     return () => {
       video.removeEventListener("timeupdate", handleTimeUpdate);
-      if (animFrameId) cancelAnimationFrame(animFrameId);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
   }, []);
 
@@ -100,12 +102,17 @@ export default function Home() {
         if (!entry.isIntersecting) {
           hasScrolledAway = true;
         } else if (entry.isIntersecting && hasScrolledAway) {
-          video.currentTime = 0; // Restart intro from beginning
+          if (animFrameRef.current) {
+            cancelAnimationFrame(animFrameRef.current);
+            animFrameRef.current = null;
+          }
+          isReversingRef.current = false;
+          video.currentTime = 0; // Restart intro from beginning (0s)
           video.play();
           hasScrolledAway = false;
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     observer.observe(heroSection);
@@ -283,33 +290,23 @@ export default function Home() {
         </AnimatePresence>
 
         {/* Hero Section = #about landing page */}
-        <header ref={heroRef} id="about" className="relative min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-center bg-[#080010] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2A0134] to-[#080010] to-70% overflow-x-hidden overflow-y-visible pt-24 md:pt-0 pb-16 md:pb-0">
-
-          {/* 1. THE BIG BOLD 3D NAME */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none overflow-hidden">
-            <h6 className="text-[18vw] md:text-[12vw] font-black text-white uppercase select-none tracking-[-0.05em] opacity-80 -translate-y-[15vh] md:-translate-y-52
-            [text-shadow:_1px_1px_0_#ccc,_2px_2px_0_#c5c5c5,_3px_3px_0_#bbb,_4px_4px_0_#b0b0b0,_5px_5px_0_#aaa,_6px_6px_0_#999,_7px_7px_0_#888,_8px_8px_20px_rgba(0,0,0,0.6)]
-            leading-[0.8] whitespace-nowrap">
-              CHATHUNI
-            </h6>
+        <header ref={heroRef} id="about" className="relative min-h-screen w-full flex flex-col md:flex-row items-center justify-between overflow-hidden pt-24 md:pt-0 pb-16 md:pb-0 bg-[#080010]">
+          {/* Full Landing Page Background Video */}
+          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0 flex items-center justify-center">
+            <video
+              ref={videoRef}
+              src="/final.mp4"
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover object-center scale-[0.95] transform-gpu"
+            />
+            {/* Subtle bottom fade to blend smoothly into the next section */}
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#080010] to-transparent pointer-events-none" />
           </div>
 
-          {/* 2. THE LIGHT GLOW */}
-          <div className="absolute z-[1] aspect-square w-[80vw] md:w-[50vw] rounded-full bg-[#2A0134] opacity-80 blur-[80px] md:blur-[120px] pointer-events-none"></div>
-
-          {/* Left Side: About Me Card */}
-          <div className="relative md:absolute w-[90%] md:w-auto mt-8 md:mt-0 order-2 md:order-none right-auto md:right-6 top-auto md:top-150 lg:right-12 xl:right-24 md:-translate-y-1/2 z-20 max-w-[320px] md:max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] block">
-            <div className="absolute top-0 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none w-1/2"></div>
-            <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
-            <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! </h2>
-            <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
-              I&apos;m An IT &amp; Management undergraduate at the University of Moratuwa.
-              I’m drawn to things that let me create, experiment, and leave a little bit of my own touch behind.
-            </p>
-          </div>
-
-          {/* Right Side: CTAs */}
-          <div className="relative md:absolute w-[90%] md:w-auto mt-6 md:mt-0 order-3 md:order-none left-auto md:left-6 lg:left-12 xl:left-24 top-auto md:top-100 z-20 flex flex-col sm:flex-row md:flex-col gap-4 md:gap-6 max-w-[400px] md:max-w-[220px] items-center flex">
+          {/* Left Side: CTAs */}
+          <div className="relative md:absolute w-[90%] md:w-auto mt-6 md:mt-0 order-2 md:order-none left-auto md:left-6 lg:left-12 xl:left-24 top-auto md:top-[65%] md:-translate-y-1/2 z-20 flex flex-col sm:flex-row md:flex-col gap-4 md:gap-6 max-w-[400px] md:max-w-[220px] items-center">
             <button
               type="button"
               onClick={handleDownload}
@@ -345,22 +342,15 @@ export default function Home() {
             </button>
           </div>
 
-          {/* 3. THE WAVING AVATAR (Always centered) */}
-          <div className="relative md:absolute w-[100%] md:w-auto order-1 md:order-none z-10 inset-0 md:inset-0 flex items-center justify-center pointer-events-none overflow-visible h-[45vh] md:h-auto">
-            <div className="absolute aspect-square w-[75vw] md:w-[55vw] max-w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255, 255, 255, 0.23)_0%,transparent_70%)] blur-[40px] md:blur-[50px] pointer-events-none z-0"></div>
-            <video
-              ref={videoRef}
-              src="/onehundred.webm"
-              autoPlay
-              muted
-              playsInline
-              className="h-[45vh] xl:h-[65vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10 md:static"
-              style={{
-                maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)',
-                mixBlendMode: 'screen'
-              }}
-            />
+          {/* Right Side: About Me Card */}
+          <div className="relative md:absolute w-[90%] md:w-auto mt-8 md:mt-0 order-1 md:order-none right-auto md:right-6 lg:right-12 xl:right-24 top-auto md:top-[80%] md:-translate-y-1/2 z-20 max-w-[320px] md:max-w-[280px] xl:max-w-sm p-6 xl:p-8 rounded-2xl overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.5),0_20px_60px_rgba(0,0,0,0.6),0_0_40px_rgba(42,1,52,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] block">
+            <div className="absolute top-0 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none w-1/2"></div>
+            <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-[#2A0134] shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
+            <h2 className="text-2xl xl:text-3xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-fuchsia-300 bg-clip-text text-transparent">Hello there! </h2>
+            <p className="text-sm xl:text-base text-slate-300 leading-relaxed font-light">
+              I&apos;m Chathuni Karunarathne, an IT &amp; Management undergraduate at the University of Moratuwa.
+              I’m drawn to things that let me create, experiment, and leave a little bit of my own touch behind.
+            </p>
           </div>
         </header>
 
