@@ -212,7 +212,7 @@ export default function Home() {
     <>
       <div className="flex min-h-screen flex-col bg-[#080010] text-white font-sans">
         {/* Navigation */}
-        <nav className="fixed top-0 left-0 z-50 pt-3 px-6 md:pt-4 md:px-8 pointer-events-none w-full max-w-[100vw] flex justify-between items-start">
+        <nav className="fixed top-0 left-0 z-50 pt-5 px-6 md:pt-6 md:px-8 pointer-events-none w-full max-w-[100vw] flex justify-between items-start">
           {/* Desktop Nav (hidden on mobile) */}
           <ul className="hidden md:flex flex-row flex-wrap items-center gap-4 lg:gap-8 pointer-events-auto relative px-6 py-3 rounded-full backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-[0_0_0_1px_rgba(42,1,52,0.6),0_0_30px_rgba(42,1,52,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] w-max max-w-full overflow-x-auto no-scrollbar">
             {[
