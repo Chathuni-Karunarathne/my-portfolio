@@ -716,15 +716,15 @@ export default function Home() {
                 <span>+94 76 213 2822</span>
                 <span className="text-xs transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-400">↗</span>
               </a>
-              <button
-                type="button"
-                onClick={handleDownload}
-                disabled={isDownloading}
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-1.5 transition-all duration-300 hover:text-purple-300 cursor-pointer bg-transparent border-0 p-0 text-slate-300 font-medium text-xs sm:text-sm md:text-base tracking-wide disabled:opacity-50"
               >
                 <span>CV, 2026</span>
-                <span className="text-xs transition-transform duration-300 group-hover:translate-y-0.5 text-purple-400">↓</span>
-              </button>
+                <span className="text-xs transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-purple-400">↗</span>
+              </a>
             </div>
             <div className="text-center text-xs text-slate-500">
               <span>© 2026 Chathuni Karunarathne. All Rights Reserved.</span>
